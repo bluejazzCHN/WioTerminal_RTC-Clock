@@ -7,7 +7,7 @@
 TFT_eSPI tft = TFT_eSPI();
 
 Clock clk = Clock(&tft);
-NtpServer ntp = NtpServer("ZSJ_HOME_robin","QQqq11!!");
+NtpServer ntp = NtpServer("********","******");
 
 void setup()
 {
