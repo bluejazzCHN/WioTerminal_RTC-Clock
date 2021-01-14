@@ -1,12 +1,13 @@
 #include <TFT_eSPI.h>
 #include <time.h>
-#ifndef _Clock_H_
-#define _Clock_H_
-#endif
 #include "Clock.h"
+#include "NtpServer.h"
+
+
 TFT_eSPI tft = TFT_eSPI();
 
 Clock clk = Clock(&tft);
+NtpServer ntp = NtpServer("ZSJ_HOME_robin","QQqq11!!");
 
 void setup()
 {
@@ -16,6 +17,8 @@ void setup()
     clk.setHead();
     clk.setClock();
     Serial.begin(115200);
+    delay(10000);
+    clk.updateRTCNtp(ntp.getNTPtime());
 }
 
 void loop()

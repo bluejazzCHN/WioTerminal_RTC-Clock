@@ -28,6 +28,10 @@ void Clock::setClock()
     delay(5000);
 }
 
+/*
+Through serial to send data to update rtc hardwar, keep time currently.
+Serail Command: "u"
+*/
 void Clock::updateRTC()
 {
     // ask user to enter new date and time
@@ -64,6 +68,7 @@ void Clock::updateRTC()
     Serial.println("RTC Updated!");
 }
 
+/*update display */
 void Clock::updateTFT()
 {
     DateTime now = rtc.now();
@@ -95,10 +100,10 @@ void Clock::updateTFT()
         sprintf(clock_mm, "%2d", mm);
     }
     char clock_yy[4];
-    sprintf(clock_yy,"%4d",yyyy);
+    sprintf(clock_yy, "%4d", yyyy);
 
     char clockTime[12];
-    sprintf(clockTime, "%2d-%2s-%2s", hh, clock_mm, clock_ss);
+    sprintf(clockTime, "%2d:%2s:%2s", hh, clock_mm, clock_ss);
     _sprClock.drawString(clockTime, 160, 120, 6);
 
     char clock_dd[4];
@@ -111,10 +116,16 @@ void Clock::updateTFT()
         sprintf(clock_dd, "%2d", dd);
     }
 
-    char clockDate[14];
+    char clockDate[20];
 
-    sprintf(clockDate,"%4d-%4s-%2s %4s",yyyy,monthInWords[MM],clock_dd,dayInWords[DD]);
+    sprintf(clockDate, "%4d-%4s-%2s %4s", yyyy, monthInWords[MM], clock_dd, dayInWords[DD]);
     _sprClock.drawString(clockDate, 160, 60, 4);
 
     _sprClock.pushSprite(0, 50);
+}
+
+void Clock::updateRTCNtp(unsigned long dt)
+{
+    rtc.adjust(DateTime(dt));
+    Serial.println("RTC Updated!");
 }

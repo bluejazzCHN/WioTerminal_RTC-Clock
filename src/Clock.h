@@ -18,5 +18,6 @@ public:
     void setHead();
     void setClock();
     void updateRTC();
+    void updateRTCNtp(unsigned long dt);
     void updateTFT();
 };
