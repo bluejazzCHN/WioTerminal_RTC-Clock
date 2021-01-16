@@ -15,7 +15,6 @@ void  rtc_cb(uint32_t flag)
     clk._alarmStatus = false;
     clk.detAlarm();
     Serial.println("RTC interrupt fired.");
-    // clk.setAlarm(10, rtc_cb);
 }
 
 void setup()
@@ -29,7 +28,6 @@ void setup()
     clk.updateRTCNtp(ntp.getNTPtime()); //auto update rtc time from NTP
     pinMode(WIO_KEY_A, INPUT);
     pinMode(WIO_KEY_B, INPUT);
-
 }
 
 void loop()

@@ -1,11 +1,12 @@
 #include "NtpServer.h"
 
+//init Ntp class with SSID and Password
 NtpServer::NtpServer(char *ssid, char *pwd)
 {
     strcpy(_ssid, ssid);
     strcpy(_pwd, pwd);
 }
-
+//connect WIFI AP
 void NtpServer::connectToWiFi()
 {
     Serial.println("Connecting to WiFi network: " + String(_ssid));
@@ -51,7 +52,7 @@ void NtpServer::connectToWiFi()
     }
     Serial.println("Connected.");
 }
-
+//get current time from NTP server
 unsigned long NtpServer::getNTPtime()
 {
     connectToWiFi();

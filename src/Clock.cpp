@@ -75,7 +75,7 @@ void Clock::updateRTC()
     Serial.println("RTC Updated!");
 }
 
-/*update display */
+/*update timer display */
 void Clock::updateTFT()
 {
     DateTime now = _rtc.now();
@@ -133,28 +133,37 @@ void Clock::updateTFT()
     _sprClock.pushSprite(0, 50);
 }
 
+//update rtc with current time using NTP server
 void Clock::updateRTCNtp(unsigned long dt)
 {
     _rtc.adjust(DateTime(dt));
     Serial.println("RTC Updated!");
 }
+
+//build screen UI
+
 void Clock::drawClock()
 {
     setHead();
     setClock();
     setStatus();
 }
+
+//display alarm icon on the scren at top-left
 void Clock::drawAlarm()
 {
     _sprStatus.pushImage(10, 9, alertWidth, alertHeight, alert);
     _sprStatus.pushSprite(0, 0);
 }
+
+//undisplay alarm icon
 void Clock::unDrawAlarm()
 {
     _sprStatus.fillSprite(TFT_BLACK);
     _sprStatus.pushSprite(0, 0);
 }
 
+//set clock alarm callback, callback is required to implement by yourself out of clock class.
 void Clock::setAlarm(unsigned long seconds, rtcCallBack cb)
 {
     DateTime now = _rtc.now();
@@ -165,9 +174,11 @@ void Clock::setAlarm(unsigned long seconds, rtcCallBack cb)
     _rtc.attachInterrupt(cb); 
     _alarmStatus = true;
 }
+//disable alarm interrupt
 void Clock::disAlarm(){
     _rtc.disableAlarm(0);
 }
+//detach alarm interrupt, normally is not required.
 void Clock::detAlarm(){
     _rtc.detachInterrupt();
 }
